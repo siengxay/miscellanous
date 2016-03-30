@@ -1,0 +1,50 @@
+package com.snhien.algo;
+
+import java.util.Arrays;
+
+public class StockPrice {
+
+	// returns 6 (buying for $5 and selling for $11)
+	public static int getMaxProfit(int[] stockPricesYesterday){
+		int maxProfit = Integer.MIN_VALUE;
+		for(int i=0; i<stockPricesYesterday.length -1; i++){
+			for (int j=i+1; j<stockPricesYesterday.length;  j++){
+				int profit = stockPricesYesterday[j] - stockPricesYesterday[i];
+				if (profit>maxProfit){
+					maxProfit = profit;
+				}
+			}
+		}
+		return(maxProfit);
+	}	
+	
+	public static int getMaxProfit2(int[] stockPricesYesterday){
+		int maxProfit = Integer.MIN_VALUE;
+		for(int i=0; i<stockPricesYesterday.length -1; i++){
+			int[] tail = Arrays.copyOfRange(stockPricesYesterday, i, stockPricesYesterday.length);
+			Arrays.sort(tail);
+			int maxTail = tail[tail.length-1];
+			int profit = maxTail - stockPricesYesterday[i];
+			if (maxProfit<profit){
+				maxProfit = profit;
+			}
+		}
+		return(maxProfit);
+	}
+	
+	public static int getMaxProfit3(int[] stockPricesYesterday){
+		int minPrice = stockPricesYesterday[0];
+		int maxProfit = stockPricesYesterday[1] - minPrice;
+		for(int i=1; i<stockPricesYesterday.length -1 ; i++){
+			minPrice = Math.min(minPrice, stockPricesYesterday[i]);
+			maxProfit = Math.max(maxProfit, stockPricesYesterday[i+1] - minPrice);
+		}
+		return (maxProfit);
+	}
+	
+	public static void main(String[] args){
+		int[] yesterday = new int[]{10, 7, 5, 8, 11, 9};
+		int maxProfit = StockPrice.getMaxProfit3(yesterday);
+		System.out.println("MaxProfit=" + maxProfit);
+	}
+}
