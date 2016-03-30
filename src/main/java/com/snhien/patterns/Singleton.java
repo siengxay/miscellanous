@@ -25,8 +25,7 @@ public class Singleton {
 		SingletonEnum.INSTANCE.increment();
 		int counter = SingletonEnum.INSTANCE.getCounter();
 		System.out.println("singletonEnum=" + counter);
-		
-		
+				
 		
 	}
 }

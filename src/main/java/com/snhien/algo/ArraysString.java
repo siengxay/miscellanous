@@ -1,5 +1,6 @@
 package com.snhien.algo;
 
+
 /**
  * Exercises from 'Cracking the Coding Interview'
  *
