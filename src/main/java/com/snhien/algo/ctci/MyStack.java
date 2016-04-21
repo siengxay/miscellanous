@@ -33,4 +33,7 @@ public class MyStack <T>{
 		node = newNode;
 	}
 
+	public boolean isEmpty(){
+		return (node==null);
+	}
 }

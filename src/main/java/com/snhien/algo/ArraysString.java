@@ -65,6 +65,62 @@ public class ArraysString {
 		return res;
 	}
 	
+	public static int isPalindrome(String a) {
+	    String lower = a.toLowerCase();
+	    lower = lower.replaceAll("[^a-z0-9]", "");
+	    StringBuilder sb = new StringBuilder();
+	    for (int i=lower.length() -1; i>=0; i--){
+	        sb.append(lower.charAt(i));
+	    }
+	    String reverse = sb.toString();
+	    boolean isPalindrome = lower.equals(reverse);
+	    return(isPalindrome?1:0);
+	}
+	
+	public static int strStr(final String haystack, final String needle) {
+		int pos = -1;
+		if (needle==null) return pos;
+		if (haystack==null) return pos;
+		if (needle.length()>haystack.length()) return pos;
+		for(int i=0; i<haystack.length() && pos<0; i++){
+			if (haystack.charAt(i) == needle.charAt(0)){
+				int posFirst = i;
+				boolean match = true;
+				for (int j=1; j<needle.length() && match ; j++){
+					match = (i+j<haystack.length())? 
+									haystack.charAt(i+j)==needle.charAt(j)
+									: false;
+				}
+				if (match==true){
+					pos = posFirst;
+				}
+			}
+		}
+		return pos;
+	}
+	
+	public static String reverseWords(String a) {
+	    if (a==null){
+	        return null;
+	    }
+	    if (a.length()==0){
+	        return a;
+	    }
+	    String[] tokens = a.split(" +");
+	    if (tokens.length==1){
+	        return tokens[0];
+	    }
+	    else{
+	        StringBuilder sb = new StringBuilder();
+	        for (int i=tokens.length; i>0; i--){
+	            if (sb.length()>0){
+	                sb.append(" ");
+	            }
+	            sb.append(tokens[i-1]);
+	        }
+	        return (sb.toString());
+	    }
+	}
 	public static void main(String[] args){
 		char[] array = {'a', ' ', 'b', 'c', ' '};
 		char[] newArray = replaceSpaces(array, 5);
@@ -73,5 +129,11 @@ public class ArraysString {
 		System.out.println("swap=" + new String(array));
 		
 		System.out.println("compress=" + compress("aaaaabccdddeeeeeeeeee"));
+		
+		System.out.println("isPalindrome = " + isPalindrome("A man, a plan, a canal: Panama"));
+		
+		System.out.println("strStr = " + strStr("bbbbbbbbab", "baba"));
+		
+		System.out.println("reverseWords = " + reverseWords("the sky  is blue"));
 	}
 }

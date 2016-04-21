@@ -9,6 +9,7 @@ public class NumArray {
     public NumArray(int[] nums) {
     	this.nums = nums;
     }
+    
 
     public int sumRange(int i, int j) {
     	int res = 0;
@@ -19,6 +20,18 @@ public class NumArray {
     		res += nums[k];
     	}
     	return(res);
+    }
+    
+    
+    //Find largest sum of contiguous elements in array - Kadane's algorithm
+    public static int getMaxSubArray(int[] array){
+    	int maxSoFar = array[0];
+    	int maxHere = array[0];
+    	for (int i=0; i<array.length; i++){
+    		maxHere = Math.max(array[i], maxHere + array[i]);
+    		maxSoFar = Math.max(maxHere, maxSoFar);
+    	}
+    	return (maxSoFar);
     }
     
     public static boolean increasingTriplet(int[] nums) {
@@ -65,15 +78,15 @@ public class NumArray {
     protected static void getPermutationsRecursive(int[] A, int pivot, 
     			List<Integer> permutation, 
     			List<List<Integer>> permutations ){
-    	if (permutation.size()==A.length){
+    	if (permutation.size()>=A.length || pivot >= A.length){
     		permutations.add(permutation);
     		return;
     	}
-    	for (int i=0; i<A.length; i++){
-    		List<Integer> newPerm = new ArrayList<Integer>(permutation);
-    		newPerm.add(i, A[pivot]);
-    		getPermutationsRecursive(A, pivot+1, newPerm, permutations);
-    	}
+	    	for (int i=0; i<A.length; i++){
+	    		List<Integer> newPerm = new ArrayList<Integer>(permutation);
+	    		newPerm.add(i, A[pivot]);
+	    		getPermutationsRecursive(A, pivot+1, newPerm, permutations);
+	    	}
     }
     //A={1,2,3}
     //pivot=0, i=0 newPerm={1}
@@ -94,5 +107,8 @@ public class NumArray {
     	
     	List<List<Integer>> permutations = getPermutations(new int[]{1,2,3});
     	System.out.println("Number of permutations = " + permutations.size());
+    	
+    	int maxSubArray = getMaxSubArray(new int[]{-160, -20});
+    	System.out.println("MaxSubArray=" + maxSubArray);
     }
 }

@@ -65,10 +65,11 @@ public class LinkedList {
 		current.next = list;
 	}
 	
+	//NOT WORKING
 	public void push(int data){
-		LinkedList newNode = new LinkedList(data, this);
+		LinkedList tmp = new LinkedList(this.data, this.getNext());
 		setData(data);
-		setNext(newNode.getNext());
+		setNext(tmp);
 	}
 	
 	public void push(LinkedList list){
@@ -203,6 +204,19 @@ public class LinkedList {
 	}
 	
 	
+	public static LinkedList reverse(LinkedList list){
+		if (list==null || list.next==null){
+			return list;
+		}
+		LinkedList rev = new LinkedList();
+		LinkedList curr = list;
+		while (curr!=null){
+			rev.push(curr.getData());
+			curr = curr.getNext();
+		}
+		return (rev);
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LinkedList list = new LinkedList(1,2,3,2,4,5,5);
@@ -217,6 +231,9 @@ public class LinkedList {
 		
 		partition(list, 3);
 		System.out.println("partition=" + list);
+		
+		LinkedList reverse = reverse(list);
+		System.out.println("reverse=" + reverse.toString());
 
 	}
 
