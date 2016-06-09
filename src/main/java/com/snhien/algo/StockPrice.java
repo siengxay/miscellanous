@@ -42,9 +42,25 @@ public class StockPrice {
 		return (maxProfit);
 	}
 	
+	
+	public static int getMaxProfit4(int[] stockPrices, int K){
+		int maxProfit = 0;
+		int[][] dp = new int[K+1][stockPrices.length];
+		for (int kk=1; kk<=K; kk++){
+			int tmpMax = dp[kk-1][0] - stockPrices[0] ;
+			for (int i=1; i<stockPrices.length; i++){
+				dp[kk][i] = Math.max( dp[kk][i-1], stockPrices[i] + tmpMax);
+				tmpMax = Math.max(tmpMax,  dp[kk-1][i] - stockPrices[i]);
+				maxProfit = Math.max( dp[kk][i], maxProfit );
+			}
+		}
+		return maxProfit;
+	}
+	
 	public static void main(String[] args){
-		int[] yesterday = new int[]{10, 7, 5, 8, 11, 9};
-		int maxProfit = StockPrice.getMaxProfit3(yesterday);
+		//int[] yesterday = new int[]{10, 7, 5, 8, 11, 9};
+		int[] yesterday = new int[]{1,2,1,2};
+		int maxProfit = StockPrice.getMaxProfit4(yesterday, 2);
 		System.out.println("MaxProfit=" + maxProfit);
 	}
 }
