@@ -48,7 +48,7 @@ public class DomainUrlCount {
 		public void reduce(Text domain, Iterator<Text> valueIter, OutputCollector<Text, IntWritable> collector, Reporter arg3)
 				throws IOException {
 			// TODO Auto-generated method stub
-			Set<String> domainUrls = nv ew HashSet<String>();
+			Set<String> domainUrls = new HashSet<String>();
 			while (valueIter.hasNext()){
 				Text url = valueIter.next();
 				domainUrls.add(url.toString());

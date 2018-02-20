@@ -1,5 +1,6 @@
 package com.snhien.algo;
 
+import java.util.Stack;
 
 /**
  * Exercises from 'Cracking the Coding Interview'
@@ -121,6 +122,66 @@ public class ArraysString {
 	        return (sb.toString());
 	    }
 	}
+	
+    private final static int MAX_DIGITS=10;
+
+	public static int atoi(final String a) {
+	    if (a==null){
+	        return 0;
+	    }
+	    String b = a.trim();
+	    char[] chars = b.toCharArray();
+	    Stack<Integer> intStack = new Stack<Integer>();
+	    int pos = 0;
+	    boolean isNegative = false;
+	    for (char c: chars){
+	        if ( c>='0' && c<='9') {
+    	        intStack.push( Integer.valueOf( "" +c) );
+    	        pos ++ ;
+	        }
+	        else if (pos==0 && ( c=='-' || c=='+')){
+	            isNegative = c=='-';
+	        }
+	        else break;
+
+	    }
+	    if (intStack.size()>MAX_DIGITS){
+	        return (getOverflow(isNegative));
+	    }
+	    int res = 0;
+	    int size = intStack.size();
+	    for( int i=0; i<size; i++ ){
+	        Integer num = intStack.pop();
+	        if (i==MAX_DIGITS-1 ){
+	            if (num>2){
+	                return (getOverflow(isNegative));
+	            }
+	        }
+	        res += Math.pow(10, i) * num;
+	    }
+	    if (res<0){
+	            return (getOverflow(isNegative));
+	    }
+	    else{
+	        if (isNegative){
+	            return  (-res);
+	        }
+	        else{
+	            return res;
+	        }
+	    }
+	    
+	}
+	
+	private static int getOverflow(boolean isNegative){
+	        if (isNegative){
+	            return Integer.MIN_VALUE;
+	        }
+	        else{
+	            return Integer.MAX_VALUE;
+	        }	    
+	}
+	
 	public static void main(String[] args){
 		char[] array = {'a', ' ', 'b', 'c', ' '};
 		char[] newArray = replaceSpaces(array, 5);
@@ -135,5 +196,7 @@ public class ArraysString {
 		System.out.println("strStr = " + strStr("bbbbbbbbab", "baba"));
 		
 		System.out.println("reverseWords = " + reverseWords("the sky  is blue"));
+		
+		System.out.println("atoi = " + atoi(" 2147483648" ));
 	}
 }

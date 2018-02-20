@@ -95,6 +95,41 @@ public class NumArray {
     //	pivot=1, i=2: newPerm={1,?,2}
     
     
+    
+    public static  int longestContinousZeroSumSubArray(int[] nums) {
+    	  int n = nums.length, max = 0;
+    	  int idxStart=0, idxEnd = 0;
+    	  
+    	  // accumulate the nums
+    	  for (int i = 1; i < n; i++) {
+    	    nums[i] += nums[i - 1];
+    	  }
+    	  
+    	  Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    	  
+    	  for (int i = 0; i < nums.length; i++) {
+    	    int num = nums[i];
+    	    
+    	    if (num == 0) {
+    	      max = Math.max(max, i + 1);
+    	      idxStart = i;
+    	      idxEnd = i+1;
+    	    }
+    	    else if (map.containsKey(num)) {
+    	      int sum = i - map.get(num);
+    	      if (sum>max) {
+    	    	  idxStart = i - sum;
+    	    	  idxEnd = i;
+    	    	  max = sum;
+    	      }
+    	    }
+    	    else
+    	      map.put(num, i);
+    	  }
+    	  System.out.println ("idxStart=" + idxStart + " idxEnd=" + idxEnd);
+    	  return max;
+    	}
+    
     public static void main(String args[]){
     	NumArray numArray = new NumArray (new int[]{-2, 0, 3, -5, 2, -1});
     	System.out.println(" (0,2)=" + numArray.sumRange(0,5));
@@ -105,10 +140,14 @@ public class NumArray {
 //    	int nthLargest = getNthLargest(new int[]{1,8,4,55,6,7,3}, 0);
 //    	System.out.println("nthLargest = " + nthLargest);
     	
-    	List<List<Integer>> permutations = getPermutations(new int[]{1,2,3});
-    	System.out.println("Number of permutations = " + permutations.size());
+ //   	List<List<Integer>> permutations = getPermutations(new int[]{1,2,3});
+ //   	System.out.println("Number of permutations = " + permutations.size());
     	
     	int maxSubArray = getMaxSubArray(new int[]{-160, -20});
     	System.out.println("MaxSubArray=" + maxSubArray);
+    	
+    	int longestContinousZero = longestContinousZeroSumSubArray(new int [] {1, 1,-2, 4, -4});
+    	System.out.println( "longestContinousZero=" + longestContinousZero);
+    	
     }
 }
